@@ -3,10 +3,10 @@ import sqlite3
 def not_valid_num():
     print("It isn't a valid value. Please type a correct number.")
 
-def fetch_one(table, column, id):
+def fetch_one(column, table, id):
     db = sqlite3.connect('bloodbank_db')
     cursor = db.cursor()
-    sql = f"select {column} from {table} where id = {id} ;"
+    sql = f"select {column} from {table} where id = {id};"
     cursor.execute(sql)
     results = cursor.fetchone()
     db.close()
@@ -80,12 +80,11 @@ def printall_usage(results):
 
 
 #update
-def update_patient(new_name, new_type, new_disease, id): #main loop add 'if no:'
+def update_patient(new_name, new_btype, new_disease, id): #main loop add 'if no:'
     db = sqlite3.connect('bloodbank_db')
     cursor = db.cursor()
-    sql = "update Patient set name = ?, type = ?, disease = ? where id = ?;"
-    values = (new_name, new_type, new_disease, id)
-    cursor.execute(sql, values)
+    sql = f"update Patient set name = '{new_name}', type = '{new_btype}', disease = '{new_disease}' where id = {id};"
+    cursor.execute(sql)
     db.commit()
     db.close()
     print("Table has been updated.")
@@ -93,7 +92,7 @@ def update_patient(new_name, new_type, new_disease, id): #main loop add 'if no:'
 def update_doner(new_name, new_btype, new_number, id): #not finished
     db = sqlite3.connect('bloodbank_db')
     cursor = db.cursor()
-    sql = ''''''
+    sql = f"update Doner set name = '{new_name}', type = '{new_btype}', numberw = '{new_number}' where id = {id};"
     cursor.execute(sql)
     db.commit()
     db.close()
