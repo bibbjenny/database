@@ -12,6 +12,8 @@ def fetch_one(column, table, id):
     db.close()
     return results
 
+
+#fetchall
 def fetchall_patient():
     db = sqlite3.connect('bloodbank_db')
     cursor = db.cursor()
@@ -24,7 +26,6 @@ def printall_patient(results):
     print("ID  | name                | type   | disease             ")
     for patient in results:
         print(f"{patient[0]:<4}| {patient[1]:<20}| {patient[2]:<7}| {patient[3]:<20}")
-
 
 def fetchall_doner():
     db = sqlite3.connect('bloodbank_db')
@@ -89,25 +90,55 @@ def update_patient(new_name, new_btype, new_disease, id): #main loop add 'if no:
     db.close()
     print("Table has been updated.")
 
-def update_doner(new_name, new_btype, new_number, id): #not finished
+def update_doner(new_name, new_btype, new_number, id):
     db = sqlite3.connect('bloodbank_db')
     cursor = db.cursor()
-    sql = f"update Doner set name = '{new_name}', type = '{new_btype}', numberw = '{new_number}' where id = {id};"
+    sql = f"update Doner set name = '{new_name}', type = '{new_btype}', number = '{new_number}' where id = {id};"
     cursor.execute(sql)
     db.commit()
     db.close()
     print("Table has been sucessfully updated.")
 
-#add
-def add_patient(new_name, new_btype, new_disease):
+def update_donation(new_donerid, new_dname, new_date, new_bankid, id): #main loop에서 donerid 넣으면 doner name도 fetch하기
     db = sqlite3.connect('bloodbank_db')
     cursor = db.cursor()
-    sql = f"insert into patient(name, type, disease) values {new_name}, {new_btype}, {new_disease}"
+    sql = f"update Donation set donerID = {new_donerid}, doner_name = '{new_dname}', date = '{new_date}', bankID = {new_bankid} where id = {id};"
+    cursor.execute(sql)
+    db.commit()
+    db.close()
+    print("Table has been sucessfully updated.") #syntax error near "where" - test.py참고
+
+def update_bank(new_address, id):
+    db = sqlite3.connect('bloodbank_db')
+    cursor = db.cursor()
+    sql = f"update Bank set address = '{new_address}' where id = {id};"
+    cursor.execute(sql)
+    db.commit()
+    db.close()
+    print("Table has been sucessfully updated.")
+
+def update_usage(new_pid, new_did, new_date, id):
+    db = sqlite3.connect('bloodbank_db')
+    cursor = db.cursor()
+    sql = f"update Usage set patientID = '{new_pid}', donerID = '{new_did}', date = '{new_date}' where id = {id};"
+    cursor.execute(sql)
+    db.commit()
+    db.close()
+    print("Table has been sucessfully updated.")
+
+
+#add
+def add_patient(new_name, new_btype, new_disease): #doesnt add
+    db = sqlite3.connect('bloodbank_db')
+    cursor = db.cursor()
+    sql = f"insert into patient(name, type, disease) values('{new_name}', '{new_btype}', '{new_disease}')"
     cursor.execute(sql)
     db.commit
     db.close()
     print("New patient has been successfully added.")
 
+
+#delete
 def delete(table, where, condition): #not finished
     db = sqlite3.connect('bloodbank_db')
     cursor = db.cursor
