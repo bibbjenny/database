@@ -10,6 +10,7 @@ def fetchall_donation() :
     print("ID  | donerID | doner name          | date      | bankID")
     for donation in results:
         print(f"{donation[0]:<4}| {donation[1]:<8}| {donation[2]:<20}| {donation[3]:<9}| {donation[4]}")
+    #this won't work- it needs to be db.close() It's a fuinction
     db.close
 
 if __name__ == "__main__":
