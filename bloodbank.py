@@ -9,7 +9,7 @@ def exit():
     print("\nExiting...")
 
 def ask_which_function():
-    change = input("\nType 0 to go back, 1 to update, 2 to add, or 3 to delete a patient: ")
+    change = input("\nType 0 to return to table menu, 1 to update, 2 to add, or 3 to delete: ")
     return change
 
 def fetch_one(column, table, id): #need to fix
@@ -214,19 +214,19 @@ Tables:
                 if disease == "no":
                     disease = fetch_one("disease", "patient", id)
                 update_patient(name, btype, disease, id)
-                break
+                continue
             elif change == "2": #add
                 name = input("Enter patient's name: ")
                 btype = input("Enter patient's blood type: ")
                 disease = input("Enter patient's disease: ")
                 add_patient(name, btype, disease)
-                break
+                continue
             elif change == "3": #delete
                 table = "patient"
                 where = input("Type column name of condition: ") #too complicated for user? fix all below if fix is needed
                 condition = input("Type value of condition: ")
                 delete(table, where, condition)
-                break
+                continue
             else:
                 not_valid_num(change)
                 continue
@@ -250,19 +250,19 @@ Tables:
                 if number == "no":
                     number = fetch_one("number", "doner", id)
                 update_doner(name, btype, number, id)
-                break
+                continue
             elif change == "2": #add
                 name = input("Enter doner's name: ")
                 btype = input("Enter doner's blood type: ")
                 number = input("Enter doner's number: ")
                 add_doner(name, btype, number)
-                break
+                continue
             elif change == "3": #delete
                 table = "doner"
                 where = input("Type column name of condition: ") 
                 condition = input("Type value of condition: ")
                 delete(table, where, condition)
-                break
+                continue
             else:
                 not_valid_num(change)
                 continue
@@ -289,20 +289,20 @@ Tables:
                 if bankid == "no":
                     bankid = fetch_one("bankID", "Donation", id)
                 update_donation(donerid, dname, date, bankid, id)  
-                break  
+                continue
             elif change == "2": #add
                 donerid = input("Enter donerID of this donation: ")
                 dname = input("Enter doner_name of this donation: ")
                 date = input("Enter date of this donation: ")
                 bankid = input("Enter bankID of this donation: ")
                 add_donation(donerid, dname, date, bankid)
-                break
+                continue
             elif change == "3": #delete
                 table = "donation"
                 where = input("Type column name of condition: ") 
                 condition = input("Type value of condition: ")
                 delete(table, where, condition)
-                break
+                continue
             else:
                 not_valid_num(change)
                 continue
@@ -320,17 +320,17 @@ Tables:
                 if address == "no":
                     address = fetch_one("address", "Bank", id)
                 update_bank(address, id)
-                break
+                continue
             elif change == "2": #add
                 address = input("Enter bank's address: ")
                 add_bank(address)
-                break
+                continue
             elif change == "3": #delete
                 table = "bank"
                 where = input("Type column name of condition: ") 
                 condition = input("Type value of condition: ")
                 delete(table, where, condition)
-                break
+                continue
             else:
                 not_valid_num(change)
                 continue
@@ -341,7 +341,32 @@ Tables:
             change = ask_which_function()
             if change == "0": #goback
                 break
-            # elif change == "1":
+            elif change == "1": #update
+                id = input("Enter ID: ")
+                print("------------------------------------------\nTo not update a specific field, type 'no'.\n------------------------------------------")    
+                pid = input("Enter new Patient ID: ")
+                if pid == "no":
+                    pid = fetch_one("patientID", "Usage", id)   
+                did = input("Enter new Doner ID: ")
+                if did == "no":
+                    did = fetch_one("donerID", "Usage", id)
+                date = input("Enter new date: ")
+                if date == "no":
+                    date = fetch_one("date", "Usage", id)
+                update_usage(pid, did, date, id)
+                continue
+            elif change == "2": #add
+                pid = input("Enter Patient ID of this Usage: ")
+                did = input("Enter Doner ID of this Usage: ")
+                date = input("Enter date of this Usage: ")
+                add_usage(pid, did, date)
+                continue
+            elif change == "3": #delete
+                table = "Usage"
+                where = input("Type column name of condition: ") 
+                condition = input("Type value of condition: ")
+                delete(table, where, condition)
+                continue
             else:
                 not_valid_num(change)
                 continue
