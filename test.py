@@ -14,16 +14,14 @@
 
 import sqlite3
 
-def update_patient(new_name, new_type, new_disease, where, condition): #main loop add 'if no:'
+#add
+def add_patient(new_name, new_btype, new_disease): #doesnt add
     db = sqlite3.connect('bloodbank_db')
     cursor = db.cursor()
-    sql = '''update patient
-    set name = ?, type = ?, disease = ?
-    where ? = ?;'''
-    values = (new_name, new_type, new_disease, where, condition)
-    cursor.execute(sql, values)
-    db.commit()
+    sql = f"insert into Patient (name, type, disease) values ('{new_name}','{new_btype}','{new_disease}');"
+    cursor.execute(sql)
+    db.commit
     db.close()
-    print("Table has been updated.")
+    print("New patient has been successfully added.")
 
-update_patient("John Smith", "O", "cancer", "ID", "1")
+add_patient("Madison Simpson", "B+", "Allergies")
